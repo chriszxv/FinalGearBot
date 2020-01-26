@@ -62,7 +62,7 @@ def checkGameState():
     if location is not None:
         return GameState.MissionClear
 
-    location = localeImage('.\\images\\Complete', confidence=0.7)
+    location = localeImage('.\\images\\complete', confidence=0.7)
     if location is not None:
         return GameState.Complete
 
