@@ -42,6 +42,8 @@ def clickImageUntilSuccess(targetImage, confidence=0.7):
 
 
 def checkGameState():
+
+    pyautogui.PAUSE = 2.0
     location = localeImage('.\\images\\file', confidence=0.9)
     if location is not None:
         return GameState.ToBattle
@@ -73,19 +75,19 @@ def handleOtherState():
     print('click battle to if exist...')
     location = localeImage('.\\images\\battle', confidence=0.7)
     if location is not None:
-        clickImageUntilSuccess('.\\images\\battle', confidence=0.7)
+        clickImage('.\\images\\battle', confidence=0.7)
         return
 
     print('click back if exist...')
     location = localeImage('.\\images\\back', confidence=0.7)
     if location is not None:
-        clickImageUntilSuccess('.\\images\\back', confidence=0.7)
+        clickImage('.\\images\\back', confidence=0.7)
         return
 
     print('click touch if exist...')
     location = localeImage('.\\images\\touch', confidence=0.7)
     if location is not None:
-        clickImageUntilSuccess('.\\images\\touch', confidence=0.7)
+        clickImage('.\\images\\touch', confidence=0.7)
         return
 
     return
