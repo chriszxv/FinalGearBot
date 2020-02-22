@@ -54,14 +54,15 @@ Start bot by typing following commands in this current directory
 
 2. Enter command:
 
-  | Parameter      | Value            | Detail                              |
-  | -------------- | ---------------- | ----------------------------------- |
-  | Chapter Number | `1`-`4`          | Chapter number                      |
-  | Stage Type     | `q` / `b`        | `q` = quest stage, `b` = boss stage |
-  | Run Time       | Unsigned Integer | Number of running time              |
+| Parameter      | Value            | Detail                              |
+| -------------- | ---------------- | ----------------------------------- |
+| Chapter Number | `1`-`4`          | Chapter number                      |
+| Stage Type     | `q` / `b`        | `q` = quest stage, `b` = boss stage |
+| Team           | `1`-`4`          | Team number                         |
+| Run Time       | Unsigned Integer | Number of running time              |
 
-  Run summary memory, chapter 1 stage quest for 30 times
+  Run summer memory, chapter `1` stage `q`uest using team `4` for `30` times
 
   ```shell
-  $ py .\summer_memory_mode.py 1 q 30
+  $ py .\summer_memory_mode.py 1 q 4 30
   ```
