@@ -9,12 +9,12 @@ pyautogui.FAILSAFE = True
 
 
 class GameState(Enum):
-    ToBattle = 'to_battle'
-    Walking = 'walking'
-    InBattle = 'in_battle'
-    MissionClear = 'mission_clear'
-    Complete = 'complete'
-    Other = 'other'
+    ToBattle = 'ToBattle'
+    Walking = 'Walking'
+    InBattle = 'InBattle'
+    MissionClear = 'MissionClear'
+    Complete = 'Complete'
+    Other = 'Other'
 
 
 def localeImage(image, confidence=0.7, grayscale=True):
@@ -47,19 +47,18 @@ def checkGameState():
     location = localeImage('.\\images\\general\\file', confidence=0.9)
     if location is not None:
         return GameState.ToBattle
-
     location = localeImage(
         '.\\images\\general\\current_region', confidence=0.9)
     if location is not None:
         return GameState.ToBattle
 
-    location = localeImage('.\\images\\general\\auto', confidence=0.9)
-    if location is not None:
-        return GameState.InBattle
-
     location = localeImage('.\\images\\general\\timer', confidence=0.7)
     if location is not None:
         return GameState.Walking
+
+    location = localeImage('.\\images\\general\\auto', confidence=0.9)
+    if location is not None:
+        return GameState.InBattle
 
     location = localeImage('.\\images\\general\\mission_clear', confidence=0.7)
     if location is not None:
@@ -159,11 +158,11 @@ def main():
         elif currentGameState == GameState.Walking:
             handleWalkingState()
 
-        elif currentGameState == GameState.MissionClear:
-            handleMissionClearState()
-
         elif currentGameState == GameState.InBattle:
             handleInBattleState()
+
+        elif currentGameState == GameState.MissionClear:
+            handleMissionClearState()
 
         elif currentGameState == GameState.Complete:
             handleCompleteState()
