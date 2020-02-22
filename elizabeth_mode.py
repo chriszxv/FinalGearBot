@@ -44,27 +44,28 @@ def clickImageUntilSuccess(targetImage, confidence=0.7):
 def checkGameState():
 
     pyautogui.PAUSE = 2.0
-    location = localeImage('.\\images\\file', confidence=0.9)
+    location = localeImage('.\\images\\general\\file', confidence=0.9)
     if location is not None:
         return GameState.ToBattle
 
-    location = localeImage('.\\images\\current_region', confidence=0.9)
+    location = localeImage(
+        '.\\images\\general\\current_region', confidence=0.9)
     if location is not None:
         return GameState.ToBattle
 
-    location = localeImage('.\\images\\auto', confidence=0.9)
+    location = localeImage('.\\images\\general\\auto', confidence=0.9)
     if location is not None:
         return GameState.InBattle
 
-    location = localeImage('.\\images\\timer', confidence=0.7)
+    location = localeImage('.\\images\\general\\timer', confidence=0.7)
     if location is not None:
         return GameState.Walking
 
-    location = localeImage('.\\images\\mission_clear', confidence=0.7)
+    location = localeImage('.\\images\\general\\mission_clear', confidence=0.7)
     if location is not None:
         return GameState.MissionClear
 
-    location = localeImage('.\\images\\complete', confidence=0.7)
+    location = localeImage('.\\images\\general\\complete', confidence=0.7)
     if location is not None:
         return GameState.Complete
 
@@ -73,21 +74,21 @@ def checkGameState():
 
 def handleOtherState():
     print('click battle to if exist...')
-    location = localeImage('.\\images\\battle', confidence=0.7)
+    location = localeImage('.\\images\\general\\battle', confidence=0.7)
     if location is not None:
-        clickImage('.\\images\\battle', confidence=0.7)
+        clickImage('.\\images\\general\\battle', confidence=0.7)
         return
 
     print('click back if exist...')
-    location = localeImage('.\\images\\back', confidence=0.7)
+    location = localeImage('.\\images\\general\\back', confidence=0.7)
     if location is not None:
-        clickImage('.\\images\\back', confidence=0.7)
+        clickImage('.\\images\\general\\back', confidence=0.7)
         return
 
     print('click touch if exist...')
-    location = localeImage('.\\images\\touch', confidence=0.7)
+    location = localeImage('.\\images\\general\\touch', confidence=0.7)
     if location is not None:
-        clickImage('.\\images\\touch', confidence=0.7)
+        clickImage('.\\images\\general\\touch', confidence=0.7)
         return
 
     return
@@ -95,28 +96,28 @@ def handleOtherState():
 
 def handleToBattleState():
     print('click explain_mission_list...')
-    clickImage('.\\images\\explain_mission_list', confidence=0.9)
+    clickImage('.\\images\\general\\explain_mission_list', confidence=0.9)
 
     print('click bounty...')
-    clickImage('.\\images\\bounty', confidence=0.9)
+    clickImage('.\\images\\general\\bounty', confidence=0.9)
 
     print('click attack...')
-    clickImage('.\\images\\attack', confidence=0.9)
+    clickImage('.\\images\\general\\attack', confidence=0.9)
 
     print('click start_mission...')
-    clickImage('.\\images\\start_mission', confidence=0.9)
+    clickImage('.\\images\\general\\start_mission', confidence=0.9)
     return
 
 
 def handleWalkingState():
     print('click quick_deploy...')
-    clickImage('.\\images\\quick_deploy', confidence=0.9)
+    clickImage('.\\images\\general\\quick_deploy', confidence=0.9)
 
     print('click auto_command...')
-    clickImage('.\\images\\auto_command', confidence=0.9)
+    clickImage('.\\images\\general\\auto_command', confidence=0.9)
 
     print('click start_battle...')
-    clickImage('.\\images\\start_battle', confidence=0.9)
+    clickImage('.\\images\\general\\start_battle', confidence=0.9)
     return
 
 
@@ -127,13 +128,13 @@ def handleInBattleState():
 
 def handleMissionClearState():
     print('click next...')
-    clickImage('.\\images\\next', confidence=0.9)
+    clickImage('.\\images\\general\\next', confidence=0.9)
     return
 
 
 def handleCompleteState():
     print('click confirm...')
-    clickImage('.\\images\\confirm', confidence=0.9)
+    clickImage('.\\images\\general\\confirm', confidence=0.9)
     return
 
 
