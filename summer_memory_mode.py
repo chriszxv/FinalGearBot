@@ -17,11 +17,6 @@ class GameState(Enum):
     Other = 'Other'
 
 
-class StageType(Enum):
-    Quest = 'q'
-    Boss = 'b'
-
-
 def localeImage(image, confidence=0.7, grayscale=True):
     return pyautogui.locateOnScreen(image + '.png', confidence=confidence, grayscale=grayscale)
 
@@ -114,26 +109,30 @@ def handleChapterSelectionState(targetChapter):
     return
 
 
-def handleStageSelectionState(targetChapter, targetStage):
+def handleStageSelectionState(targetChapter):
 
-    global targetRunCount
+    global targetBossRunCount
+    global targetQuestRunCount
+    global ranBossStage
+    global ranQuestStage
 
-    print('run time remains: ' + str(targetRunCount))
+    ranBossStage = False
+    ranQuestStage = False
 
-    print('click stage ' + str(targetChapter) +
-          ' ' + str(targetStage) + ' if exist...')
-
-    if targetStage == StageType.Quest:
-        clickImage('.\\images\\summer_memory\\quest', confidence=0.7)
-        clickImage('.\\images\\summer_memory\\' +
-                   str(targetChapter) + '_t', confidence=0.9)
-
-    elif targetStage == StageType.Boss:
+    if targetBossRunCount > 0:
+        print('click chapter ' + str(targetChapter) + ' boss stage if exist...')
         clickImage('.\\images\\summer_memory\\boss', confidence=0.7)
         clickImage('.\\images\\summer_memory\\' +
                    str(targetChapter) + '_ex', confidence=0.9)
+        ranBossStage = True
 
-    targetRunCount = targetRunCount - 1
+    elif targetQuestRunCount > 0:
+        print('click chapter ' + str(targetChapter) + ' quest stage if exist...')
+        clickImage('.\\images\\summer_memory\\quest', confidence=0.7)
+        clickImage('.\\images\\summer_memory\\' +
+                   str(targetChapter) + '_t', confidence=0.9)
+        ranQuestStage = True
+
     return
 
 
@@ -153,31 +152,50 @@ def handleInBattleState():
 
 
 def handleMissionClearState():
+
+    global targetBossRunCount
+    global targetQuestRunCount
+    global ranBossStage
+    global ranQuestStage
+
     print('click next...')
     clickImage('.\\images\\general\\next', confidence=0.9)
+
+    print('click next...')
+    clickImage('.\\images\\general\\next', confidence=0.9)
+
+    if ranBossStage == True:
+        targetBossRunCount = targetBossRunCount - 1
+
+    if ranQuestStage == True:
+        targetQuestRunCount = targetQuestRunCount - 1
+
+    print('run boss stage remains: ' + str(targetBossRunCount) + ' time(s)')
+    print('run quest stage remains: ' + str(targetQuestRunCount) + ' time(s)')
     return
 
 
 def main():
-    global targetRunCount
+    global targetBossRunCount
+    global targetQuestRunCount
 
     scriptName = str(sys.argv[0])
     targetChapter = str(sys.argv[1])
-    targetStage = StageType(sys.argv[2])
-    targetTeam = str(sys.argv[3])
-    targetRunCount = int(sys.argv[4])
+    targetTeam = str(sys.argv[2])
+    targetBossRunCount = int(sys.argv[3])
+    targetQuestRunCount = int(sys.argv[4])
 
     print('start running: ' + str(scriptName))
     print('chapter: ' + str(targetChapter))
-    print('stage: ' + str(targetStage))
     print('team: ' + str(targetTeam))
-    print('run: ' + str(targetRunCount) + ' time(s)')
+    print('run boss stage: ' + str(targetBossRunCount) + ' time(s)')
+    print('run quest stage: ' + str(targetQuestRunCount) + ' time(s)')
     print('press Ctrl-C to quit.')
 
     while True:
         print('...')
 
-        if targetRunCount < 0:
+        if targetBossRunCount == 0 and targetQuestRunCount == 0:
             print('finish')
             return
 
@@ -193,7 +211,7 @@ def main():
             handleChapterSelectionState(targetChapter)
 
         elif currentGameState == GameState.StageSelection:
-            handleStageSelectionState(targetChapter, targetStage)
+            handleStageSelectionState(targetChapter)
 
         elif currentGameState == GameState.BattlePreparation:
             handleBattlePreparationState(targetTeam)
