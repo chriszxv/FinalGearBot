@@ -110,28 +110,26 @@ def handleChapterSelectionState(targetChapter):
 
 
 def handleStageSelectionState(targetChapter):
-
     global targetBossRunCount
     global targetQuestRunCount
-    global ranBossStage
-    global ranQuestStage
 
-    ranBossStage = False
-    ranQuestStage = False
+    print('handleStageSelectionState...')
+    print('targetBossRunCount ' + str(targetBossRunCount))
+    print('targetQuestRunCount ' + str(targetQuestRunCount))
 
     if targetBossRunCount > 0:
         print('click chapter ' + str(targetChapter) + ' boss stage if exist...')
         clickImage('.\\images\\summer_memory\\boss', confidence=0.7)
         clickImage('.\\images\\summer_memory\\' +
                    str(targetChapter) + '_ex', confidence=0.9)
-        ranBossStage = True
+        targetBossRunCount = targetBossRunCount - 1
 
     elif targetQuestRunCount > 0:
         print('click chapter ' + str(targetChapter) + ' quest stage if exist...')
         clickImage('.\\images\\summer_memory\\quest', confidence=0.7)
         clickImage('.\\images\\summer_memory\\' +
                    str(targetChapter) + '_t', confidence=0.9)
-        ranQuestStage = True
+        targetQuestRunCount = targetQuestRunCount - 1
 
     return
 
@@ -152,26 +150,8 @@ def handleInBattleState():
 
 
 def handleMissionClearState():
-
-    global targetBossRunCount
-    global targetQuestRunCount
-    global ranBossStage
-    global ranQuestStage
-
     print('click next...')
     clickImage('.\\images\\general\\next', confidence=0.9)
-
-    print('click next...')
-    clickImage('.\\images\\general\\next', confidence=0.9)
-
-    if ranBossStage == True:
-        targetBossRunCount = targetBossRunCount - 1
-
-    if ranQuestStage == True:
-        targetQuestRunCount = targetQuestRunCount - 1
-
-    print('run boss stage remains: ' + str(targetBossRunCount) + ' time(s)')
-    print('run quest stage remains: ' + str(targetQuestRunCount) + ' time(s)')
     return
 
 
@@ -195,13 +175,8 @@ def main():
     while True:
         print('...')
 
-        if targetBossRunCount == 0 and targetQuestRunCount == 0:
-            print('finish')
-            return
-
         currentGameState = checkGameState()
-        print(
-            '============================================================================')
+        print('=============================================================')
         print('game state: ' + currentGameState.name)
 
         if currentGameState == GameState.Other:
@@ -221,6 +196,9 @@ def main():
 
         elif currentGameState == GameState.MissionClear:
             handleMissionClearState()
+            if targetBossRunCount == 0 and targetQuestRunCount == 0:
+                print('finish')
+                return
 
     return
 
