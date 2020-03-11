@@ -82,16 +82,22 @@ def checkGameState():
 def handleOtherState():
     print('wait...')
 
-    print('click battle if exist...')
-    location = localeImage('.\\images\\general\\battle', confidence=0.7)
+    print('click summer memory event if exist...')
+    location = localeImage('.\\images\\summer_memory\\event', confidence=0.7)
     if location is not None:
-        clickImage('.\\images\\general\\battle', confidence=0.7)
+        clickImage('.\\images\\summer_memory\\event', confidence=0.7)
         return
 
-    print('click start mission if exist...')
-    location = localeImage('.\\images\\general\\start_mission', confidence=0.7)
+    print('click summer memory battle if exist...')
+    location = localeImage('.\\images\\summer_memory\\battle', confidence=0.7)
     if location is not None:
-        clickImage('.\\images\\general\\start_mission', confidence=0.7)
+        clickImage('.\\images\\summer_memory\\battle', confidence=0.7)
+        return
+
+    print('click back if exist...')
+    location = localeImage('.\\images\\general\\back', confidence=0.7)
+    if location is not None:
+        clickImage('.\\images\\general\\back', confidence=0.7)
         return
 
     print('click touch if exist...')
@@ -130,6 +136,12 @@ def handleStageSelectionState(targetChapter):
         clickImage('.\\images\\summer_memory\\' +
                    str(targetChapter) + '_t', confidence=0.9)
         targetQuestRunCount = targetQuestRunCount - 1
+
+    print('click start mission if exist...')
+    location = localeImage('.\\images\\general\\start_mission', confidence=0.7)
+    if location is not None:
+        clickImage('.\\images\\general\\start_mission', confidence=0.7)
+        return
 
     return
 
