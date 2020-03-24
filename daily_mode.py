@@ -94,6 +94,10 @@ def checkGameState():
         '.\\images\\daily\\enter_region', confidence=0.9)
     if location is not None:
         return GameState.BattleTypeSelection
+    location = localeImage(
+        '.\\images\\daily\\hero_difficulty', confidence=0.8)
+    if location is not None:
+        return GameState.BattleTypeSelection
 
     location = localeImage(
         '.\\images\\daily\\mode_selection_story_mode', confidence=0.9)
@@ -145,9 +149,9 @@ def handleOtherState():
         clickImage('.\\images\\general\\touch', confidence=0.7)
         return
 
-    location = localeImage('.\\images\\general\\back', confidence=0.7)
+    location = localeImage('.\\images\\general\\back')
     if location is not None:
-        clickImage('.\\images\\general\\back', confidence=0.7)
+        clickImage('.\\images\\general\\back')
         return
     return
 
@@ -171,9 +175,12 @@ def handleBattleTypeSelectionState():
 
     elif currentInstanceRemainCount > 0:
         clickImage('.\\images\\general\\explain_mission_list', confidence=0.9)
+        waitAnimation(1.0)
         clickImage('.\\images\\general\\bounty', confidence=0.9)
+        waitAnimation(1.0)
         clickImage('.\\images\\daily\\important', confidence=0.9)
         if currentInstanceRemainCount == 5:
+            waitAnimation(1.0)
             clickImage('.\\images\\daily\\instance_5', confidence=0.8)
         elif currentInstanceRemainCount == 4:
             dragImageDownUntil('.\\images\\daily\\instance_5',
@@ -203,8 +210,10 @@ def handleBattleTypeSelectionState():
             dragImageDownUntil('.\\images\\daily\\instance_2',
                                '.\\images\\daily\\instance_1')
             clickImage('.\\images\\daily\\instance_1', confidence=0.8)
+        waitAnimation(1.0)
         clickImage('.\\images\\daily\\hero_difficulty', confidence=0.8)
         clickImage('.\\images\\daily\\start_mission', confidence=0.9)
+        waitAnimation(2.0)
         currentInstanceRemainCount = currentInstanceRemainCount - 1
     else:
         currentRecollectionDoneCount = -1
@@ -224,9 +233,7 @@ def handleRecollectionSelectionState():
         clickImage('.\\images\\daily\\confirm', confidence=0.9)
         waitAnimation(2.0)
     else:
-        clickBackImageUntil('.\\images\\general\\back',
-                            '.\\images\\daily\\i_lv60')
-        clickImage('.\\images\\general\\battle', confidence=0.7)
+        clickImage('.\\images\\general\\back')
 
     currentRecollectionDoneCount = currentRecollectionDoneCount + 1
     return
@@ -259,6 +266,7 @@ def handleMissionClearState():
 
 def handleCompleteState():
     clickImage('.\\images\\general\\confirm', confidence=0.9)
+    waitAnimation(5.0)
     return
 
 
